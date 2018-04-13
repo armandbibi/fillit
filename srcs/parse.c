@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/13 16:48:10 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/13 21:20:02 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,21 @@ char			*ft_readfd(char *str)
 t_tetri			*ft_atotet(char *str)
 {
 	t_tetri		*tetri;
-printf("je commece a partir de LA\n %s \n", str);
 	tetri = new_tetri();
 	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)))
 	{
-printf("je pense aue le tetris est bon\n");
-		str += BUF_SIZ + 1;
-		tetri->next = ft_atotet(str);
+		str = &str[21];
+		if(*str != 0)
+		{
+			printf("next\n");
+			tetri->next = ft_atotet(str);
+		}
+		else
+			printf("sorti correcte\n");
 	}
 	else
 	{
+		printf("appreds a finir correctement\n");
 		free(tetri->pa);
 		free(tetri->pb);
 		free(tetri->pc);
@@ -56,41 +61,51 @@ t_tetri			*ft_tetri_add_pos(t_tetri *tetri, char *str)
 {
 	int i;
 	int countht;
-printf("AJOUT DES POSITIONS:\n");
+	int j;
+	int k;
+printf("new tetri\n");
 	i = 0;
 	countht = 0;
-	while (i < 20)
+	while (i < 4)
 	{
-		if (i && ((((i + 1) % 5) && str[i] == '\n') || (!((i + 1) % 5) && str[i] != '\n')))
+		j = 0;
+		while (j < 5)
 		{
-printf("i = %d && str[i] = %c:probleme dans le carre a verifier\n", i, str[i]);
-			return (0);
-		}
-		if (str[i] == '#')
-		{
-			if (countht == 0)
-			{
-				tetri->pa = ft_itopos(tetri->pa, i);
-printf("pax = %d && px = %d\n", tetri->pa->x, tetri->pa->y);
-				countht++;
-			}
-			else if (countht == 1)
-			{
-				tetri->pb = ft_itopos(tetri->pb, i);
-				countht++;
-			}
-			else if (countht == 2)
-			{
-				tetri->pc = ft_itopos(tetri->pc, i);
-				countht++;
-			}
-			else if (countht == 3)
-			{
-				tetri->pd = ft_itopos(tetri->pd, i);
-				countht++;
-			}
-			else
+			k = i * 5 + j;
+			if (str[k] != '\n' && str[k] != '.' && str[k] != '#')
 				return (0);
+			if (j && ((j && str[k - 1] == '\n') || (!j && str[k - 1] != '\n')))
+				return (0);
+			if (str[k] == '#')
+			{
+				if (countht == 0)
+				{
+printf("1 = %d, %d\n",i,j);
+					ft_itopos(tetri->pa, i, j);
+					countht++;
+				}
+				else if (countht == 1)
+				{
+printf("1 = %d, %d\n",i,j);
+					ft_itopos(tetri->pb, i, j);
+					countht++;
+				}
+				else if (countht == 2)
+				{
+printf("1 = %d, %d\n",i,j);
+					ft_itopos(tetri->pc, i, j);
+					countht++;
+				}
+				else if (countht == 3)
+				{
+printf("1 = %d, %d\n",i,j);
+					ft_itopos(tetri->pd, i, j);
+					countht++;
+				}
+				else
+					return (0);
+			}
+			j++;
 		}
 		i++;
 	}
@@ -99,14 +114,10 @@ printf("pax = %d && px = %d\n", tetri->pa->x, tetri->pa->y);
 
 int				ft_is_tetri_valid(t_tetri *tetri)
 {
-	int i;
-
-	i = 0;
-	i += ft_are_pos_adj(tetri, tetri->pa);
-	i += ft_are_pos_adj(tetri, tetri->pb);
-	i += ft_are_pos_adj(tetri, tetri->pc);
-	i += ft_are_pos_adj(tetri, tetri->pd);
-	return (i);
+	if (ft_are_pos_adj(tetri, tetri->pa) && ft_are_pos_adj(tetri, tetri->pb)
+			&& ft_are_pos_adj(tetri, tetri->pc) && ft_are_pos_adj(tetri, tetri->pd))
+		return (1);
+	return (0);
 }
 
 t_tetri			*new_tetri(void)

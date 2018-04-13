@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/13 16:17:51 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/13 16:48:10 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ char			*ft_readfd(char *str)
 t_tetri			*ft_atotet(char *str)
 {
 	t_tetri		*tetri;
-
+printf("je commece a partir de LA\n %s \n", str);
 	tetri = new_tetri();
 	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)))
 	{
-		str += BUF_SIZ;
+printf("je pense aue le tetris est bon\n");
+		str += BUF_SIZ + 1;
 		tetri->next = ft_atotet(str);
 	}
 	else
@@ -55,18 +56,22 @@ t_tetri			*ft_tetri_add_pos(t_tetri *tetri, char *str)
 {
 	int i;
 	int countht;
-
+printf("AJOUT DES POSITIONS:\n");
 	i = 0;
 	countht = 0;
-	while (i < 21)
+	while (i < 20)
 	{
-		if (((i % 5) && str[i] == '\n') || ((i % 5) && str[i] != '\n'))
+		if (i && ((((i + 1) % 5) && str[i] == '\n') || (!((i + 1) % 5) && str[i] != '\n')))
+		{
+printf("i = %d && str[i] = %c:probleme dans le carre a verifier\n", i, str[i]);
 			return (0);
-		else if (str[i] == '#')
+		}
+		if (str[i] == '#')
 		{
 			if (countht == 0)
 			{
 				tetri->pa = ft_itopos(tetri->pa, i);
+printf("pax = %d && px = %d\n", tetri->pa->x, tetri->pa->y);
 				countht++;
 			}
 			else if (countht == 1)
@@ -87,8 +92,6 @@ t_tetri			*ft_tetri_add_pos(t_tetri *tetri, char *str)
 			else
 				return (0);
 		}
-		else
-			return (0);
 		i++;
 	}
 	return (tetri);

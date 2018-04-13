@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/12 16:01:11 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/13 16:17:51 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_tetri			*ft_atotet(char *str)
 	t_tetri		*tetri;
 
 	tetri = new_tetri();
-	if (ft_tetri_check(tetri, str))
+	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)))
 	{
 		str += BUF_SIZ;
 		tetri->next = ft_atotet(str);
@@ -51,16 +51,59 @@ t_tetri			*ft_atotet(char *str)
 	return (tetri);
 }
 
-t_tetri			*ft_tetri_check(t_tetri *tetri, char *str)
+t_tetri			*ft_tetri_add_pos(t_tetri *tetri, char *str)
 {
-	t_position	*p;
-	int			i;
+	int i;
+	int countht;
 
 	i = 0;
-	p = new_position(-2, -2);
-	while (str[i] == '.' || str[i] == '#' || (str[i] == '\n' && str[i] - 1 != '\n' ))
+	countht = 0;
+	while (i < 21)
 	{
+		if (((i % 5) && str[i] == '\n') || ((i % 5) && str[i] != '\n'))
+			return (0);
+		else if (str[i] == '#')
+		{
+			if (countht == 0)
+			{
+				tetri->pa = ft_itopos(tetri->pa, i);
+				countht++;
+			}
+			else if (countht == 1)
+			{
+				tetri->pb = ft_itopos(tetri->pb, i);
+				countht++;
+			}
+			else if (countht == 2)
+			{
+				tetri->pc = ft_itopos(tetri->pc, i);
+				countht++;
+			}
+			else if (countht == 3)
+			{
+				tetri->pd = ft_itopos(tetri->pd, i);
+				countht++;
+			}
+			else
+				return (0);
+		}
+		else
+			return (0);
+		i++;
 	}
+	return (tetri);
+}
+
+int				ft_is_tetri_valid(t_tetri *tetri)
+{
+	int i;
+
+	i = 0;
+	i += ft_are_pos_adj(tetri, tetri->pa);
+	i += ft_are_pos_adj(tetri, tetri->pb);
+	i += ft_are_pos_adj(tetri, tetri->pc);
+	i += ft_are_pos_adj(tetri, tetri->pd);
+	return (i);
 }
 
 t_tetri			*new_tetri(void)

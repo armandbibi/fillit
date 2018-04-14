@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 14:25:24 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/13 18:58:29 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 14:56:08 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,33 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-typedef struct      s_position
+typedef struct			s_position
 {
-	int x;
-	int y;
-}                   t_position;
+	int					x;
+	int					y;
+	struct s_position	*next;
+}						t_position;
 
-typedef struct		s_tetri
+typedef struct			s_tetri
 {
-	t_position		*pa;
-	t_position		*pb;
-	t_position		*pc;
-	t_position		*pd;
-	int				placed;
-	struct s_tetri	*next;
-}					t_tetri;
+	t_position			*pa;
+	t_position			*pb;
+	t_position			*pc;
+	t_position			*pd;
+	int					placed;
+	struct s_tetri		*next;
+}						t_tetri;
 
-char				*ft_readfd(char *str);
+char					*ft_readfd(char *str);
 
+void					ft_fdtotetris(int fd);
+t_tetri					*ft_atotet(char *str);
+t_tetri					*new_tetri(void);
+t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str);
+int						ft_is_tetri_valid(t_tetri *tetri);
+void					ft_remove_extra_spaces(t_tetri *tetri);
 
-
-void				ft_fdtotetris(int fd);
-t_tetri				*ft_atotet(char *str);
-t_tetri				*new_tetri(void);
-t_tetri				*ft_tetri_add_pos(t_tetri *tetri, char *);
-int					ft_is_tetri_valid(t_tetri *tetri);
-
-t_position			*new_position(int x, int y);
-t_position			*ft_itopos(t_position *pos,int i, int j);
-int					ft_are_pos_adj(t_tetri *t, t_position *p);
+t_position				*new_position(int x, int y);
+t_position				*ft_itopos(t_position *pos, int i, int j);
+int						ft_are_pos_adj(t_tetri *t, t_position *p);
 #endif

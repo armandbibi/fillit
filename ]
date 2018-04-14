@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 16:40:39 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:35:09 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_tetri					*ft_atotet(char *str)
 		str = &str[21];
 		if (*str != 0)
 		{
-write(1, "new tetri\n", 10);
 			tetri->next = ft_atotet(str);
 		}
 		else
@@ -47,7 +46,7 @@ write(1, "new tetri\n", 10);
 	}
 	else
 	{
-		printf("apprends a finir correctement\n");
+		printf("appreds a finir correctement\n");
 		free(tetri->pa);
 		free(tetri->pb);
 		free(tetri->pc);
@@ -61,12 +60,12 @@ write(1, "new tetri\n", 10);
 t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 {
 	int i;
+	int countht;
 	int j;
 	int k;
-	t_position *p = tetri->pa;
-	int countht = 0;
-	t_tetri *t = tetri;
+
 	i = 0;
+	countht = 0;
 	while (i < 4)
 	{
 		j = 0;
@@ -79,17 +78,12 @@ t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 				return (0);
 			if (str[k] == '#')
 			{
-write(1, "got one\n", 8);
-				if (tetri->pa)
+				if (tetri->pa->next)
 				{
 					ft_itopos(tetri->pa,i, j);
-					printf("%d", t->pa->x);
-					tetri->pa = tetri->pa->next;
 
 				}
-				else
-					return (0);
-				/*
+				ele return (0);
 				if (countht == 0)
 				{
 					ft_itopos(tetri->pa, i, j);
@@ -111,13 +105,12 @@ write(1, "got one\n", 8);
 					countht++;
 				}
 				else
-					return (0);*/
+					return (0);
 			}
 			j++;
 		}
 		i++;
 	}
-	tetri->pa = p;
 	return (tetri);
 }
 
@@ -133,7 +126,6 @@ int						ft_is_tetri_valid(t_tetri *tetri)
 
 t_tetri					*new_tetri(void)
 {
-printf("la\n");
 	t_tetri		*tetri;
 
 	if (!(tetri = (t_tetri *)malloc(sizeof(t_tetri))))

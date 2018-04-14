@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 16:40:39 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:48:19 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 				return (0);
 			if (str[k] == '#')
 			{
-write(1, "got one\n", 8);
 				if (tetri->pa)
 				{
 					ft_itopos(tetri->pa,i, j);
@@ -89,29 +88,6 @@ write(1, "got one\n", 8);
 				}
 				else
 					return (0);
-				/*
-				if (countht == 0)
-				{
-					ft_itopos(tetri->pa, i, j);
-					countht++;
-				}
-				else if (countht == 1)
-				{
-					ft_itopos(tetri->pb, i, j);
-					countht++;
-				}
-				else if (countht == 2)
-				{
-					ft_itopos(tetri->pc, i, j);
-					countht++;
-				}
-				else if (countht == 3)
-				{
-					ft_itopos(tetri->pd, i, j);
-					countht++;
-				}
-				else
-					return (0);*/
 			}
 			j++;
 		}

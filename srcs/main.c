@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 14:29:00 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 14:27:25 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:48:21 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int main(int ac, char ** av)
 		return 0;
 	lst_tetri = ft_atotet(s);
 
-	ft_putchar(lst_tetri->pc->y + 48);
 	while(lst_tetri)
 	{
 		ft_remove_extra_spaces(lst_tetri);

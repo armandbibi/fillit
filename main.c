@@ -6,31 +6,31 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 14:29:00 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 16:48:21 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:30:19 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "fillit.h"
 
 int main(int ac, char ** av)
 {
-	int		fd;
-	char	*s;
-	int		ret;
+	int			fd;
+	char		*s;
+	int			ret;
 	t_tetri		*lst_tetri;
+	int 		size;
+	char 		**map;
 
+	size = 4;
 	s = ft_readfd(av[1]);
 	if((close(fd))<0)
 		return 0;
-	lst_tetri = ft_atotet(s);
-
-	while(lst_tetri)
+	map = ft_map_new(size);
+	lst_tetri = ft_atotet(s, 'A');
+	while((!ft_frame_check(map, lst_tetri, 0, 0)))
 	{
-		ft_remove_extra_spaces(lst_tetri);
-		printf("TETRI:\npa:%d %d\n", lst_tetri->pa->x, lst_tetri->pa->y);
-		printf("pb:%d %d\n", lst_tetri->pb->x, lst_tetri->pb->y);
-		printf("pc:%d %d\n", lst_tetri->pc->x, lst_tetri->pc->y);
-		printf("pd:%d %d\n", lst_tetri->pd->x, lst_tetri->pd->y);
-		lst_tetri = lst_tetri->next;
+		ft_map_free(map);
+		map = ft_map_new(size++);
 	}
+	ft_map_print(map);
 }

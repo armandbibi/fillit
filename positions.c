@@ -6,29 +6,13 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:48:05 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 15:27:29 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:33:16 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "fillit.h"
 
-t_position			*new_position(int x, int y)
-{
-	t_position	*position;
 
-	if (!(position = (t_position *)malloc(sizeof(t_position))))
-		return (0);
-	position->x = x;
-	position->y = y;
-	return (position);
-}
-
-t_position			*ft_itopos(t_position *pos, int i, int j)
-{
-	pos->x = i;
-	pos->y = j;
-	return (pos);
-}
 
 int					ft_are_pos_adj_one(t_position *p1, t_position *p2)
 {

@@ -6,12 +6,12 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 16:48:19 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:10:48 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define BUF_SIZ 21 * 26
-#include "../includes/fillit.h"
+#include "fillit.h"
 
 char					*ft_readfd(char *str)
 {
@@ -29,21 +29,19 @@ char					*ft_readfd(char *str)
 	return (dup);
 }
 
-t_tetri					*ft_atotet(char *str)
+t_tetri					*ft_atotet(char *str, char letter)
 {
 	t_tetri		*tetri;
 
 	tetri = new_tetri();
 	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)))
 	{
+		tetri->letter = letter;
 		str = &str[21];
 		if (*str != 0)
 		{
-write(1, "new tetri\n", 10);
-			tetri->next = ft_atotet(str);
+			tetri->next = ft_atotet(str, letter + 1);
 		}
-		else
-			printf("sorti correcte\n");
 	}
 	else
 	{
@@ -63,9 +61,8 @@ t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 	int i;
 	int j;
 	int k;
+
 	t_position *p = tetri->pa;
-	int countht = 0;
-	t_tetri *t = tetri;
 	i = 0;
 	while (i < 4)
 	{
@@ -81,8 +78,7 @@ t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 			{
 				if (tetri->pa)
 				{
-					ft_itopos(tetri->pa,i, j);
-					printf("%d", t->pa->x);
+					ft_itopos(tetri->pa,j, i);
 					tetri->pa = tetri->pa->next;
 
 				}

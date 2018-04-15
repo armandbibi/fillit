@@ -6,7 +6,7 @@
 /*   By: fedecomb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 17:05:36 by fedecomb          #+#    #+#             */
-/*   Updated: 2018/04/14 20:59:42 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/15 14:53:03 by fedecomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,18 @@ int		ft_frame_check(char **frame, t_tetri *elem, int x, int y)
 	int good = 0;
 	cpx = x;
 	cpy = y;
-write(1, "check\n", 6);
+	if (!elem)
+		return (1);
 	while (frame[cpy])
 	{
-//ft_putnbr(elem->pd->x);
-//write(1, '\n', 1);
-		while (frame[cpy][cpx] && !good)
+		while (frame[cpy][cpx])
 		{
 			if(ft_check_and_place(frame, elem, cpx, cpy))
 			{
-				ft_frame_remove(frame, elem,cpx, cpy);
-				write(1, "j en ai place 1\n", 16);
-				if(ft_frame_check(frame, elem->next, cpx, cpy))
+				if (ft_frame_check(frame, elem->next, 0, 0))
 					return 1;
-				ft_frame_remove(frame, elem,cpx, cpy);
+				else
+					(ft_frame_remove(frame, elem, cpx, cpy));
 			}
 			cpx++;
 		}
@@ -40,7 +38,7 @@ write(1, "check\n", 6);
 		cpy++;
 	}
 	return 0;
-	
+
 }
 
 int		ft_check_and_place(char **frame, t_tetri *elem, int x, int y)
@@ -52,7 +50,7 @@ int		ft_check_and_place(char **frame, t_tetri *elem, int x, int y)
 	p = elem->pa;
 	while (p)
 	{
-		if (frame[p->y + y][p->x + x] == '.' && p->x + x < size && p->y + y < size)
+		if (p->x + x < size && p->y + y < size && frame[p->y + y][p->x + x] == '.')
 			p = p->next;
 		else
 			return (0);
@@ -63,7 +61,6 @@ int		ft_check_and_place(char **frame, t_tetri *elem, int x, int y)
 		frame[p->y + y][p->x + x] = elem->letter;
 		p = p->next;
 	}
-ft_map_print(frame);
 	return (1);
 }
 
@@ -71,7 +68,6 @@ void	ft_frame_remove(char **frame, t_tetri *elem, int x, int y)
 {
 	t_position *p;
 
-write(1,'Q', 1);
 	p = elem->pa;
 	while (p)
 	{

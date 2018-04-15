@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 14:29:00 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 20:30:19 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/15 14:52:17 by fedecomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int main(int ac, char ** av)
 		return 0;
 	map = ft_map_new(size);
 	lst_tetri = ft_atotet(s, 'A');
+	ft_remove_extra_spaces(lst_tetri);
+	//ft_putnbr(lst_tetri->pa->y);
 	while((!ft_frame_check(map, lst_tetri, 0, 0)))
 	{
 		ft_map_free(map);

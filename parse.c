@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/14 20:10:48 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/15 14:53:29 by fedecomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int						ft_is_tetri_valid(t_tetri *tetri)
 
 t_tetri					*new_tetri(void)
 {
-printf("la\n");
 	t_tetri		*tetri;
 
 	if (!(tetri = (t_tetri *)malloc(sizeof(t_tetri))))
@@ -125,18 +124,25 @@ printf("la\n");
 
 void					ft_remove_extra_spaces(t_tetri *tetri)
 {
-	while (tetri->pa->x && tetri->pb->x && tetri->pc->x && tetri->pd->x)
+	t_tetri *copie;
+	copie = tetri;
+	while (tetri)
 	{
-		tetri->pa->x--;
-		tetri->pb->x--;
-		tetri->pc->x--;
-		tetri->pd->x--;
+		while (tetri->pa->x && tetri->pb->x && tetri->pc->x && tetri->pd->x)
+		{
+			tetri->pa->x--;
+			tetri->pb->x--;
+			tetri->pc->x--;
+			tetri->pd->x--;
+		}
+		while (tetri->pa->y && tetri->pb->y && tetri->pc->y && tetri->pd->y)
+		{
+			tetri->pa->y--;
+			tetri->pb->y--;
+			tetri->pc->y--;
+			tetri->pd->y--;
+		}
+		tetri = tetri->next;
 	}
-	while (tetri->pa->y && tetri->pb->y && tetri->pc->y && tetri->pd->y)
-	{
-		tetri->pa->y--;
-		tetri->pb->y--;
-		tetri->pc->y--;
-		tetri->pd->y--;
-	}
+	tetri = copie;
 }

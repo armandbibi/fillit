@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/15 15:12:33 by fedecomb         ###   ########.fr       */
+/*   Updated: 2018/04/15 21:46:09 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,23 @@ char					*ft_readfd(char *str)
 	int		size;
 	char	*dup;
 
+	dup = NULL;
 	fd = open(str, O_RDONLY);
-	if ((size = (read(fd, block, BUF_SIZ))))
+	if ((size = (read(fd, block, BUF_SIZ))) && size % 21 == 20)
 	{
-		dup = ft_strnew(ft_strlen(block));
+		if ((dup = malloc(sizeof(char) * size + 2)) == 0)
+			return (0);
 		ft_strncpy(dup, block, ft_strlen(block));
+		dup[size] = '\n';
+		dup[size + 1] = '\0';
 	}
+	else
+	{
+		write(1, "error", 5);
+		exit(0);
+	}
+	if (close(fd) < 0)
+		return (0);
 	return (dup);
 }
 
@@ -37,21 +48,13 @@ t_tetri					*ft_atotet(char *str, char letter)
 	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)))
 	{
 		tetri->letter = letter;
-		str = &str[21];
-		if (*str != 0)
-		{
-			tetri->next = ft_atotet(str, letter + 1);
-		}
+		if (str[20] == '\n' && str[21] != 0)
+			tetri->next = ft_atotet(&str[21], letter + 1);
 	}
 	else
 	{
-		printf("apprends a finir correctement\n");
-		free(tetri->pa);
-		free(tetri->pb);
-		free(tetri->pc);
-		free(tetri->pd);
-		free(tetri);
-		tetri = NULL;
+		write(1, "error", 6);
+		exit(0);
 	}
 	return (tetri);
 }
@@ -95,10 +98,12 @@ t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 
 int						ft_is_tetri_valid(t_tetri *tetri)
 {
-	if (ft_are_pos_adj(tetri, tetri->pa)
-			&& ft_are_pos_adj(tetri, tetri->pb)
-			&& ft_are_pos_adj(tetri, tetri->pc)
-			&& ft_are_pos_adj(tetri, tetri->pd))
+	int i;
+
+	if ((i = ft_are_pos_adj(tetri, tetri->pa))
+			&& (i += ft_are_pos_adj(tetri, tetri->pb))
+			&& (i += ft_are_pos_adj(tetri, tetri->pc))
+			&& (i += ft_are_pos_adj(tetri, tetri->pd)) && i > 2)
 		return (1);
 	return (0);
 }

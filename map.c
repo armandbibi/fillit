@@ -6,7 +6,7 @@
 /*   By: fedecomb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 15:30:18 by fedecomb          #+#    #+#             */
-/*   Updated: 2018/04/13 16:24:58 by fedecomb         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:07:37 by fedecomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			ft_map_free(char **map)
 			free(map[len]);
 			map[len++] = NULL;
 		}
-		free (map);
+		free(map);
 		map = NULL;
 	}
 }

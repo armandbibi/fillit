@@ -6,7 +6,7 @@
 /*   By: fedecomb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 17:05:36 by fedecomb          #+#    #+#             */
-/*   Updated: 2018/04/15 14:53:03 by fedecomb         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:09:40 by fedecomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_frame_check(char **frame, t_tetri *elem, int x, int y)
 {
 	int cpx;
 	int cpy;
-	int good = 0;
+
 	cpx = x;
 	cpy = y;
 	if (!elem)
@@ -25,10 +25,10 @@ int		ft_frame_check(char **frame, t_tetri *elem, int x, int y)
 	{
 		while (frame[cpy][cpx])
 		{
-			if(ft_check_and_place(frame, elem, cpx, cpy))
+			if (ft_check_and_place(frame, elem, cpx, cpy))
 			{
 				if (ft_frame_check(frame, elem->next, 0, 0))
-					return 1;
+					return (1);
 				else
 					(ft_frame_remove(frame, elem, cpx, cpy));
 			}
@@ -37,20 +37,20 @@ int		ft_frame_check(char **frame, t_tetri *elem, int x, int y)
 		cpx = 0;
 		cpy++;
 	}
-	return 0;
-
+	return (0);
 }
 
 int		ft_check_and_place(char **frame, t_tetri *elem, int x, int y)
 {
-	int size;
-	t_position *p;
+	int			size;
+	t_position	*p;
 
 	size = ft_strlen(*frame);
 	p = elem->pa;
 	while (p)
 	{
-		if (p->x + x < size && p->y + y < size && frame[p->y + y][p->x + x] == '.')
+		if (p->x + x < size && p->y + y < size &&
+				frame[p->y + y][p->x + x] == '.')
 			p = p->next;
 		else
 			return (0);
@@ -75,5 +75,3 @@ void	ft_frame_remove(char **frame, t_tetri *elem, int x, int y)
 		p = p->next;
 	}
 }
-
-

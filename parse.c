@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/15 14:53:29 by fedecomb         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:12:33 by fedecomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ t_tetri					*ft_atotet(char *str, char letter)
 
 t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 {
-	int i;
-	int j;
-	int k;
+	int			i;
+	int			j;
+	int			k;
+	t_position	*p;
 
-	t_position *p = tetri->pa;
+	p = tetri->pa;
 	i = 0;
 	while (i < 4)
 	{
@@ -78,9 +79,8 @@ t_tetri					*ft_tetri_add_pos(t_tetri *tetri, char *str)
 			{
 				if (tetri->pa)
 				{
-					ft_itopos(tetri->pa,j, i);
+					ft_itopos(tetri->pa, j, i);
 					tetri->pa = tetri->pa->next;
-
 				}
 				else
 					return (0);
@@ -125,6 +125,7 @@ t_tetri					*new_tetri(void)
 void					ft_remove_extra_spaces(t_tetri *tetri)
 {
 	t_tetri *copie;
+
 	copie = tetri;
 	while (tetri)
 	{

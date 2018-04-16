@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 17:08:21 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/15 21:46:09 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/16 13:03:45 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ t_tetri					*ft_atotet(char *str, char letter)
 	t_tetri		*tetri;
 
 	tetri = new_tetri();
-	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)))
+	if (ft_tetri_add_pos(tetri, str) && (ft_is_tetri_valid(tetri)) && str[20] == '\n')
 	{
 		tetri->letter = letter;
-		if (str[20] == '\n' && str[21] != 0)
+		if (str[20] == '\n' && str[21])
 			tetri->next = ft_atotet(&str[21], letter + 1);
 	}
 	else
 	{
-		write(1, "error", 6);
+		write(1, "error", 5);
 		exit(0);
 	}
 	return (tetri);
@@ -103,7 +103,7 @@ int						ft_is_tetri_valid(t_tetri *tetri)
 	if ((i = ft_are_pos_adj(tetri, tetri->pa))
 			&& (i += ft_are_pos_adj(tetri, tetri->pb))
 			&& (i += ft_are_pos_adj(tetri, tetri->pc))
-			&& (i += ft_are_pos_adj(tetri, tetri->pd)) && i > 2)
+			&& (i += ft_are_pos_adj(tetri, tetri->pd)) && i >= 6)
 		return (1);
 	return (0);
 }

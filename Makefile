@@ -6,7 +6,7 @@
 #    By: abiestro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 13:58:03 by abiestro          #+#    #+#              #
-#    Updated: 2018/04/15 18:43:08 by abiestro         ###   ########.fr        #
+#    Updated: 2018/04/16 14:49:01 by abiestro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS= main.c \
 	  parse.c \
 	  map.c \
 	  shape.c \
-	  positions.c
+	  positions.c \
+	  checks.c
 
 
 OBJS= $(SRCS:.c=.o)

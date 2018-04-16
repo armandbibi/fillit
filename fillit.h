@@ -6,7 +6,7 @@
 /*   By: abiestro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 14:25:24 by abiestro          #+#    #+#             */
-/*   Updated: 2018/04/15 17:32:33 by abiestro         ###   ########.fr       */
+/*   Updated: 2018/04/16 19:29:39 by abiestro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# define BUF_SIZ 21* 26
 
 typedef struct			s_position
 {
@@ -51,6 +52,7 @@ void					ft_remove_extra_spaces(t_tetri *tetri);
 t_position				*new_position(int x, int y);
 t_position				*ft_itopos(t_position *pos, int i, int j);
 int						ft_are_pos_adj(t_tetri *t, t_position *p);
+int						ft_check_char(char *str, int i, int j, int k);
 
 int						ft_check_and_place(char **frame, t_tetri *elem,
 						int x, int y);
